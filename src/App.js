@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
-import logo from './logo.svg';
 import { Provider } from 'react-redux';
 import './App.css';
+import AppRoutes from './components/Router/AppRouter'
+import createAppStore from './components/state/createAppStore'
 
 function App() {
   return (
-   <Provider>
+   <Provider store={createAppStore()}>
        <Fragment>
-         
+         <AppRoutes/>
 
        </Fragment>
 
