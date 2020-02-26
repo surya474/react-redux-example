@@ -1,4 +1,4 @@
-import {saveTodo,ADD_TODO} from '../actions/todoAction'
+import {saveTodo,ADD_TODO, GET_TODOS} from '../actions/todoAction'
 
 const initialState= {
     list: [],
@@ -13,13 +13,27 @@ const initialState= {
        case ADD_TODO :
            let data= {...state}
            console.log(state)
-           data.list.push({id: state.id ++, task:action.payload.title})
+           data.list.push({id: state.id ++, title:action.payload.title})
            return data
+       case GET_TODOS:  
+                 console.log(action.payload.data)
+                 if(action.error){
 
+                 }
+                 else{
+                    let tododata = {...state}
+                    tododata.list = action.payload.data
+                    return tododata
+                 }
+                 
+                 
+       
            default:
            return state
 
   }
+
+
 
 }
 export default saveTodoReducer

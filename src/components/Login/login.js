@@ -2,7 +2,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { saveTodo, ADD_TODO } from '../state/actions/todoAction'
+import { saveTodo, getTodos } from '../state/actions/todoAction'
 import Form from 'react-jsonschema-form'
 
 class Todo extends React.Component {
@@ -10,10 +10,16 @@ class Todo extends React.Component {
         super(props)
         console.log("constructor ",this.props)
         this.handleSubmit = this.handleSubmit.bind(this)
+     
         
         
     }
+    async componentDidMount(){
+        await this.props.getTodos()
+        console.log("after api call")
+    }
     componentDidUpdate(prevprops){
+     
         console.log("component update",prevprops, this.props)
     }
 
@@ -24,6 +30,7 @@ class Todo extends React.Component {
     onSubmit (e){
         console.log(e.formData)
         this.props.saveTodo(e.formData)
+        this.props.getTodos()
     }
 
     renderList(){
@@ -31,7 +38,7 @@ class Todo extends React.Component {
         if(this.props.list){
             console.log(this.props.list)
             return(
-                this.props.list.map((item,index) => <li key={index} > {item.task}</li>)
+                this.props.list.map((item,index) => <li key={index} > {item.title}</li>)
             )
         }
     }
@@ -69,7 +76,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ saveTodo }, dispatch)
+    return bindActionCreators({ saveTodo ,getTodos}, dispatch)
 }
 
 const hoc = connect(mapStateToProps, mapDispatchToProps)(Todo)
